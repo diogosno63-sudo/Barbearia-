@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbearia do Orlando</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  /* muda cor do fundo*/
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #e9e9f0, #333030);
+    padding: 20px;
+    min-height: 100vh;
+  }
+    /* muda cor do titolo */
+  h1 {
+    text-align: center;
+    color: #0d0d0e;
+    margin-bottom: 25px;
+  }
+/* muda a cor das caixas do formularios*/
+  form, .admin-panel, .login-admin {
+    background: #9388bb;
+    padding: 25px;
+    margin: 20px auto;
+    max-width: 480px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s;
+  }
+
+  form:hover, .admin-panel:hover, .login-admin:hover {
+    transform: translateY(-5px);
+  }
+/* linhas da porta do formularios*/
+  input, select {
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #c0c0c0;
+    font-size: 15px;
+  }
+
+  button {
+    background: linear-gradient(90deg, #1E90FF, #007BFF);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: linear-gradient(90deg, #0056b3, #1E90FF);
+    transform: translateY(-3px);
+  }
+
+  .hidden { display: none; }
+
+  .agendamento-card {
+    border-radius: 14px;
+    padding: 15px;
+    margin: 10px 0;
+    background: #f7f9ff;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  .agendamento-card i {
+    margin-right: 8px;
+    color: #007BFF;
+  }
+
+  #btn-admin {
+    display: block;
+    width: 220px;
+    margin: 20px auto;
+    font-size: 16px;
+  }
+
+  h2, h3 {
+    color: #040608;
+    text-align: center;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  #assinatura {
+  text-align: center;
+  margin-top: 30px;
+  padding: 10px;
+  font-size: 10px;
+  color: #2a3138; /* Azul principal */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-top: 2px solid #1E90FF; /* Linha azul acima da assinatura */
+  background-color: #adadca; /* Fundo claro para destacar */
+}
+
+#assinatura strong {
+  color: #003366; /* Azul mais escuro para o nome da barbearia */
+  font-size: 16px;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Barbearia do Orlando</h1>
+<h2>Agendar</h2>
+
+<!-- Formulário Usuário -->
+<form id="form-agendamento">
+  <input type="text" id="nome" placeholder="Seu Nome" required>
+  <input type="text" id="telefone" placeholder="Telefone" required>
+  <select id="servico" required>
+    <option value="">Selecione o serviço</option>
+    <option value="Corte degrade"><i class="fa-solid fa-scissors"></i> Corte degrade - R$40</option>
+    <option value="Corte social"><i class="fa-solid fa-scissors"></i> Corte social - R$35</option>
+    <option value="Só sobrancelha"><i class="fa-solid fa-eye"></i> Só sobrancelha - R$15</option>
+    <option value="Barba"><i class="fa-solid fa-beard"></i> Barba - R$25</option>
+    <option value="Pezinho"><i class="fa-solid fa-foot"></i> Pezinho - R$15</option>
+    <option value="Pacote semanal"><i class="fa-solid fa-calendar-week"></i> Pacote semanal - R$45</option>
+    <option value="Cabelo+Barba+Sobrancelha"><i class="fa-solid fa-scissors"></i> Cabelo + Barba + Sobrancelha - R$65</option>
+    <option value="Só corte e barba"><i class="fa-solid fa-scissors"></i> Só corte e barba - R$60</option>
+    <option value="Só corte e sobrancelha"><i class="fa-solid fa-scissors"></i> Só corte e sobrancelha - R$50</option>
+    <option value="Relaxamento"><i class="fa-solid fa-spa"></i> Relaxamento - R$60</option>
+    <option value="Hidratação"><i class="fa-solid fa-droplet"></i> Hidratação - R$60</option>
+    <option value="Luzes"><i class="fa-solid fa-lightbulb"></i> Luzes - R$85</option>
+    <option value="Platinado"><i class="fa-solid fa-snowflake"></i> Platinado - R$130</option>
+  </select>
+  <input type="date" id="data" required>
+  <select id="hora" required></select>
+  <button type="submit">Agendar Horario</button>
+</form>
+
+<div id="lista-agendamentos"></div>
+
+<!-- Botão Admin -->
+<button id="btn-admin">Acesso do Administrador</button>
+
+<!-- Login Admin -->
+<div class="login-admin hidden">
+  <form id="form-login">
+    <input type="text" id="usuario" placeholder="Usuário" required>
+    <input type="password" id="senha" placeholder="Senha" required>
+    <button type="submit">Entrar</button>
+  </form>
+</div>
+
+<!-- Painel Admin -->
+<div class="admin-panel hidden">
+  <h2>Painel Administrativo</h2>
+  <button id="logout">Sair</button>
+  <h3>Fecha agendar, Horário/Dia</h3>
+  <input type="date" id="bloquear-data">
+  <input type="time" id="bloquear-hora">
+  <button id="btn-bloquear">Fechar agenda</button>
+  <div id="lista-admin"></div>
+  <div id="lista-bloqueios"></div>
+</div>
+
+<script>
+// Mesma lógica do código anterior
+let agendamentos = [];
+let bloqueios = [];
+
+const formAgendamento = document.getElementById('form-agendamento');
+const listaAgendamentos = document.getElementById('lista-agendamentos');
+const btnAdmin = document.getElementById('btn-admin');
+const loginAdmin = document.querySelector('.login-admin');
+const formLogin = document.getElementById('form-login');
+const adminPanel = document.querySelector('.admin-panel');
+const logout = document.getElementById('logout');
+const btnBloquear = document.getElementById('btn-bloquear');
+const bloquearData = document.getElementById('bloquear-data');
+const bloquearHora = document.getElementById('bloquear-hora');
+const listaAdmin = document.getElementById('lista-admin');
+const listaBloqueios = document.getElementById('lista-bloqueios');
+const selectHora = document.getElementById('hora');
+
+// Gerar horários de 40 em 40 minutos (08:00 até 18:00)
+function gerarHorarios(){
+  selectHora.innerHTML='';
+  let h=8, m=0;
+  while(h<18){
+    let hs = String(h).padStart(2,'0');
+    let ms = String(m).padStart(2,'0');
+    const option = document.createElement('option');
+    option.value = `${hs}:${ms}`;
+    option.textContent = `${hs}:${ms}`;
+    selectHora.appendChild(option);
+    m+=40;
+    if(m>=60){ m-=60; h++; }
+  }
+}
+gerarHorarios();
+
+// Mostrar agendamentos para usuário
+function mostrarAgendamentos(){
+  listaAgendamentos.innerHTML='';
+  agendamentos.forEach((a,i)=>{
+    const div=document.createElement('div');
+    div.className='agendamento-card';
+    div.innerHTML = `<i class="fa-solid fa-user"></i> <strong>${a.nome}</strong> - ${a.servico} <br> ${a.data} ${a.hora}
+      <br><button onclick="cancelarAgendamento(${i})">Cancelar Agendamento</button>`;
+    listaAgendamentos.appendChild(div);
+  });
+}
+
+// Cancelar agendamento pelo usuário
+function cancelarAgendamento(i){
+  agendamentos.splice(i,1);
+  mostrarAgendamentos();
+  mostrarAdmin();
+  alert('Agendamento cancelado com sucesso!');
+}
+
+// Mostrar admin
+function mostrarAdmin(){
+  listaAdmin.innerHTML='';
+  listaBloqueios.innerHTML='';
+
+  bloqueios.forEach((b,i)=>{
+    const div = document.createElement('div');
+    div.className='agendamento-card bloqueio';
+    div.innerHTML = `Fechado: ${b.data} ${b.hora||'Dia inteiro'} <br>
+      <button onclick="desbloquear(${i})">Abrir agenda</button>`;
+    listaBloqueios.appendChild(div);
+  });
+
+  agendamentos.forEach((a,i)=>{
+    const div = document.createElement('div');
+    div.className='agendamento-card admin-agendamento';
+    div.innerHTML = `<strong>${a.nome}</strong> - ${a.servico}<br>${a.data} ${a.hora}
+      <br><button onclick="cancelarAgendamentoAdmin(${i})">Cancelar</button>`;
+    listaAdmin.appendChild(div);
+  });
+}
+
+// Desbloquear bloqueio
+function desbloquear(i){
+  bloqueios.splice(i,1);
+  mostrarAdmin();
+  alert('Bloqueio removido!');
+}
+
+// Cancelar agendamento pelo admin
+function cancelarAgendamentoAdmin(i){
+  agendamentos.splice(i,1);
+  mostrarAdmin();
+  mostrarAgendamentos();
+  alert('Agendamento cancelado!');
+}
+
+// Adicionar agendamento
+formAgendamento.addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const nome = document.getElementById('nome').value;
+  const telefone = document.getElementById('telefone').value;
+  const servico = document.getElementById('servico').value;
+  const data = document.getElementById('data').value;
+  const hora = document.getElementById('hora').value;
+
+  if(bloqueios.some(b=>b.data===data && (b.hora===hora || !b.hora))){
+    alert('Agenda fechada!');
+    return;
+  }
+
+  if(agendamentos.some(a=>a.data===data && a.hora===hora)){
+    alert('Já existe um agendamento nesse horário!');
+    return;
+  }
+
+  agendamentos.push({nome, telefone, servico, data, hora});
+  mostrarAgendamentos();
+  mostrarAdmin();
+  alert('Agendado com sucesso!');
+  formAgendamento.reset();
+});
+
+// Botão Admin
+btnAdmin.addEventListener('click',()=>{
+  loginAdmin.classList.toggle('hidden');
+});
+
+// Login Admin
+formLogin.addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const usuario = document.getElementById('usuario').value;
+  const senha = document.getElementById('senha').value;
+  if(usuario==='admin' && senha==='1234'){
+    loginAdmin.classList.add('hidden');
+    adminPanel.classList.remove('hidden');
+    mostrarAdmin();
+  }else{
+    alert('Usuário ou senha incorretos!');
+  }
+});
+
+// Logout Admin
+logout.addEventListener('click',()=>{
+  adminPanel.classList.add('hidden');
+});
+
+// Bloquear horário/dia
+btnBloquear.addEventListener('click',()=>{
+  const data = bloquearData.value;
+  const hora = bloquearHora.value;
+  if(!data){ alert('Selecione uma data'); return; }
+  bloqueios.push({data, hora: hora || null});
+  mostrarAdmin();
+  alert('Bloqueio adicionado!');
+  bloquearData.value=''; bloquearHora.value='';
+});
+</script>
+<footer id="assinatura">
+  <p><strong>Barbearia do Orlando</strong></p>
+  <p>Rua Exemplo, 123 - Bairro, Cidade</p>
+  <p>Telefone: (00) 12345-6789 | WhatsApp: (00) 98765-4321</p>
+  <p>Instagram: @barbeariadoorlando</p>
+</footer>
+
+</body>
+</html>
+
+
+
