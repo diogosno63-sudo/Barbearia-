@@ -3,333 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Barbearia do Orlando</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>Agendamento Barbearia</title>
 <style>
-  /* muda cor do fundo*/
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #e9e9f0, #333030);
-    padding: 20px;
-    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #e3f2fd, #ffffff);
+    margin: 0;
+    padding: 0 20px;
   }
-    /* muda cor do titolo */
-  h1 {
-    text-align: center;
-    color: #0d0d0e;
-    margin-bottom: 25px;
-  }
-/* muda a cor das caixas do formularios*/
-  form, .admin-panel, .login-admin {
-    background: #9388bb;
-    padding: 25px;
-    margin: 20px auto;
-    max-width: 480px;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    transition: transform 0.3s;
-  }
-
-  form:hover, .admin-panel:hover, .login-admin:hover {
-    transform: translateY(-5px);
-  }
-/* linhas da porta do formularios*/
-  input, select {
-    width: 100%;
-    margin: 10px 0;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid #c0c0c0;
-    font-size: 15px;
-  }
-
-  button {
-    background: linear-gradient(90deg, #1E90FF, #007BFF);
-    color: #fff;
-    border: none;
-    padding: 12px;
-    width: 100%;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  button:hover {
-    background: linear-gradient(90deg, #0056b3, #1E90FF);
-    transform: translateY(-3px);
-  }
-
-  .hidden { display: none; }
-
-  .agendamento-card {
-    border-radius: 14px;
-    padding: 15px;
-    margin: 10px 0;
-    background: #f7f9ff;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    animation: fadeIn 0.5s ease forwards;
-  }
-
-  .agendamento-card i {
-    margin-right: 8px;
-    color: #007BFF;
-  }
-
-  #btn-admin {
-    display: block;
-    width: 220px;
-    margin: 20px auto;
-    font-size: 16px;
-  }
-
-  h2, h3 {
-    color: #040608;
-    text-align: center;
-  }
-
-  @keyframes fadeIn {
-    from {opacity: 0; transform: translateY(10px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
-  #assinatura {
-  text-align: center;
-  margin-top: 30px;
-  padding: 10px;
-  font-size: 10px;
-  color: #2a3138; /* Azul principal */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  border-top: 2px solid #1E90FF; /* Linha azul acima da assinatura */
-  background-color: #adadca; /* Fundo claro para destacar */
-}
-
-#assinatura strong {
-  color: #003366; /* Azul mais escuro para o nome da barbearia */
-  font-size: 16px;
-}
-
+  h1, h2 { color: #1a73e8; }
+  .container { max-width: 600px; margin: 20px auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  label { display: block; margin-top: 10px; }
+  select, input, button { width: 100%; padding: 8px; margin-top: 5px; border-radius: 8px; border: 1px solid #ccc; }
+  button { background-color: #1a73e8; color: #fff; border: none; cursor: pointer; font-weight: bold; }
+  button:hover { background-color: #155ab6; }
+  .admin { background: #e8f0fe; padding: 15px; margin-top: 20px; border-radius: 12px; }
+  ul { padding-left: 20px; }
 </style>
 </head>
 <body>
 
-<h1>Barbearia do Orlando</h1>
-<h2>Agendar</h2>
+<div class="container">
+  <h1>Barbearia do Orlando</h1>
 
-<!-- Formulário Usuário -->
-<form id="form-agendamento">
-  <input type="text" id="nome" placeholder="Seu Nome" required>
-  <input type="text" id="telefone" placeholder="Telefone" required>
-  <select id="servico" required>
-    <option value="">Selecione o serviço</option>
-    <option value="Corte degrade"><i class="fa-solid fa-scissors"></i> Corte degrade - R$40</option>
-    <option value="Corte social"><i class="fa-solid fa-scissors"></i> Corte social - R$35</option>
-    <option value="Só sobrancelha"><i class="fa-solid fa-eye"></i> Só sobrancelha - R$15</option>
-    <option value="Barba"><i class="fa-solid fa-beard"></i> Barba - R$25</option>
-    <option value="Pezinho"><i class="fa-solid fa-foot"></i> Pezinho - R$15</option>
-    <option value="Pacote semanal"><i class="fa-solid fa-calendar-week"></i> Pacote semanal - R$45</option>
-    <option value="Cabelo+Barba+Sobrancelha"><i class="fa-solid fa-scissors"></i> Cabelo + Barba + Sobrancelha - R$65</option>
-    <option value="Só corte e barba"><i class="fa-solid fa-scissors"></i> Só corte e barba - R$60</option>
-    <option value="Só corte e sobrancelha"><i class="fa-solid fa-scissors"></i> Só corte e sobrancelha - R$50</option>
-    <option value="Relaxamento"><i class="fa-solid fa-spa"></i> Relaxamento - R$60</option>
-    <option value="Hidratação"><i class="fa-solid fa-droplet"></i> Hidratação - R$60</option>
-    <option value="Luzes"><i class="fa-solid fa-lightbulb"></i> Luzes - R$85</option>
-    <option value="Platinado"><i class="fa-solid fa-snowflake"></i> Platinado - R$130</option>
-  </select>
-  <input type="date" id="data" required>
-  <select id="hora" required></select>
-  <button type="submit">Agendar Horario</button>
-</form>
+  <!-- Login -->
+  <div class="login">
+    <h2>Login</h2>
+    <label>Email:</label>
+    <input type="email" id="email" placeholder="Email">
+    <label>Senha:</label>
+    <input type="password" id="senha" placeholder="Senha">
+    <button onclick="login()">Entrar</button>
+    <p id="loginMsg"></p>
+  </div>
 
-<div id="lista-agendamentos"></div>
+  <!-- Cliente -->
+  <div class="cliente" style="display:none;">
+    <h2>Agendar Serviço</h2>
+    <label>Serviço:</label>
+    <select id="servicoSelect"></select>
 
-<!-- Botão Admin -->
-<button id="btn-admin">Acesso do Administrador</button>
+    <label>Data:</label>
+    <input type="date" id="dataInput">
 
-<!-- Login Admin -->
-<div class="login-admin hidden">
-  <form id="form-login">
-    <input type="text" id="usuario" placeholder="Usuário" required>
-    <input type="password" id="senha" placeholder="Senha" required>
-    <button type="submit">Entrar</button>
-  </form>
+    <label>Hora:</label>
+    <select id="horaSelect"></select>
+
+    <button onclick="agendar()">Agendar</button>
+    <p id="agendamentoMsg"></p>
+  </div>
+
+  <!-- Admin -->
+  <div class="admin" style="display:none;">
+    <h2>Bloquear Horário</h2>
+    <label>Data:</label>
+    <input type="date" id="adminData">
+
+    <label>Hora:</label>
+    <select id="adminHora"></select>
+
+    <label>Motivo:</label>
+    <input type="text" id="adminMotivo">
+
+    <button onclick="bloquear()">Bloquear</button>
+    <p id="bloqueioMsg"></p>
+
+    <h3>Agenda fechada</h3>
+    <ul id="listaBloqueios"></ul>
+  </div>
+
+  <h2>Agendamentos</h2>
+  <ul id="listaAgendamentos"></ul>
 </div>
 
-<!-- Painel Admin -->
-<div class="admin-panel hidden">
-  <h2>Painel Administrativo</h2>
-  <button id="logout">Sair</button>
-  <h3>Fecha agendar, Horário/Dia</h3>
-  <input type="date" id="bloquear-data">
-  <input type="time" id="bloquear-hora">
-  <button id="btn-bloquear">Fechar agenda</button>
-  <div id="lista-admin"></div>
-  <div id="lista-bloqueios"></div>
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
 <script>
-// Mesma lógica do código anterior
-let agendamentos = [];
-let bloqueios = [];
+  const SUPABASE_URL = "https://gskvkziggkqkfdwnubih.supabase.co"; // substitua
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdza3ZremlnZ2txa2Zkd251YmloIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzI1NjYxMCwiZXhwIjoyMDcyODMyNjEwfQ.8Wy0beQokGW2MpYzR9Zx20SOxYUO7IyDC68Fv4xbdis"; // substitua
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const formAgendamento = document.getElementById('form-agendamento');
-const listaAgendamentos = document.getElementById('lista-agendamentos');
-const btnAdmin = document.getElementById('btn-admin');
-const loginAdmin = document.querySelector('.login-admin');
-const formLogin = document.getElementById('form-login');
-const adminPanel = document.querySelector('.admin-panel');
-const logout = document.getElementById('logout');
-const btnBloquear = document.getElementById('btn-bloquear');
-const bloquearData = document.getElementById('bloquear-data');
-const bloquearHora = document.getElementById('bloquear-hora');
-const listaAdmin = document.getElementById('lista-admin');
-const listaBloqueios = document.getElementById('lista-bloqueios');
-const selectHora = document.getElementById('hora');
+  let usuarioAtual = null;
 
-// Gerar horários de 40 em 40 minutos (08:00 até 18:00)
-function gerarHorarios(){
-  selectHora.innerHTML='';
-  let h=8, m=0;
-  while(h<18){
-    let hs = String(h).padStart(2,'0');
-    let ms = String(m).padStart(2,'0');
-    const option = document.createElement('option');
-    option.value = `${hs}:${ms}`;
-    option.textContent = `${hs}:${ms}`;
-    selectHora.appendChild(option);
-    m+=40;
-    if(m>=60){ m-=60; h++; }
-  }
-}
-gerarHorarios();
-
-// Mostrar agendamentos para usuário
-function mostrarAgendamentos(){
-  listaAgendamentos.innerHTML='';
-  agendamentos.forEach((a,i)=>{
-    const div=document.createElement('div');
-    div.className='agendamento-card';
-    div.innerHTML = `<i class="fa-solid fa-user"></i> <strong>${a.nome}</strong> - ${a.servico} <br> ${a.data} ${a.hora}
-      <br><button onclick="cancelarAgendamento(${i})">Cancelar Agendamento</button>`;
-    listaAgendamentos.appendChild(div);
-  });
-}
-
-// Cancelar agendamento pelo usuário
-function cancelarAgendamento(i){
-  agendamentos.splice(i,1);
-  mostrarAgendamentos();
-  mostrarAdmin();
-  alert('Agendamento cancelado com sucesso!');
-}
-
-// Mostrar admin
-function mostrarAdmin(){
-  listaAdmin.innerHTML='';
-  listaBloqueios.innerHTML='';
-
-  bloqueios.forEach((b,i)=>{
-    const div = document.createElement('div');
-    div.className='agendamento-card bloqueio';
-    div.innerHTML = `Fechado: ${b.data} ${b.hora||'Dia inteiro'} <br>
-      <button onclick="desbloquear(${i})">Abrir agenda</button>`;
-    listaBloqueios.appendChild(div);
-  });
-
-  agendamentos.forEach((a,i)=>{
-    const div = document.createElement('div');
-    div.className='agendamento-card admin-agendamento';
-    div.innerHTML = `<strong>${a.nome}</strong> - ${a.servico}<br>${a.data} ${a.hora}
-      <br><button onclick="cancelarAgendamentoAdmin(${i})">Cancelar</button>`;
-    listaAdmin.appendChild(div);
-  });
-}
-
-// Desbloquear bloqueio
-function desbloquear(i){
-  bloqueios.splice(i,1);
-  mostrarAdmin();
-  alert('Bloqueio removido!');
-}
-
-// Cancelar agendamento pelo admin
-function cancelarAgendamentoAdmin(i){
-  agendamentos.splice(i,1);
-  mostrarAdmin();
-  mostrarAgendamentos();
-  alert('Agendamento cancelado!');
-}
-
-// Adicionar agendamento
-formAgendamento.addEventListener('submit',(e)=>{
-  e.preventDefault();
-  const nome = document.getElementById('nome').value;
-  const telefone = document.getElementById('telefone').value;
-  const servico = document.getElementById('servico').value;
-  const data = document.getElementById('data').value;
-  const hora = document.getElementById('hora').value;
-
-  if(bloqueios.some(b=>b.data===data && (b.hora===hora || !b.hora))){
-    alert('Agenda fechada!');
-    return;
+  async function login() {
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password: senha });
+    if (error) {
+      document.getElementById('loginMsg').textContent = "Erro: " + error.message;
+      return;
+    }
+    usuarioAtual = data.user;
+    const perfil = await supabase.from('users').select('tipo').eq('id', usuarioAtual.id).single();
+    document.querySelector('.login').style.display = 'none';
+    if (perfil.data.tipo === 'cliente') {
+      document.querySelector('.cliente').style.display = 'block';
+    } else {
+      document.querySelector('.admin').style.display = 'block';
+    }
+    carregarServicos();
+    gerarHorarios();
+    carregarBloqueios();
+    carregarAgendamentos();
   }
 
-  if(agendamentos.some(a=>a.data===data && a.hora===hora)){
-    alert('Já existe um agendamento nesse horário!');
-    return;
+  async function carregarServicos() {
+    const { data, error } = await supabase.from('services').select('*');
+    if (error) return console.error(error);
+    const select = document.getElementById('servicoSelect');
+    select.innerHTML = '';
+    data.forEach(s => {
+      const option = document.createElement('option');
+      option.value = s.id;
+      option.textContent = `${s.nome} (${s.duracao} min)`;
+      select.appendChild(option);
+    });
   }
 
-  agendamentos.push({nome, telefone, servico, data, hora});
-  mostrarAgendamentos();
-  mostrarAdmin();
-  alert('Agendado com sucesso!');
-  formAgendamento.reset();
-});
-
-// Botão Admin
-btnAdmin.addEventListener('click',()=>{
-  loginAdmin.classList.toggle('hidden');
-});
-
-// Login Admin
-formLogin.addEventListener('submit',(e)=>{
-  e.preventDefault();
-  const usuario = document.getElementById('usuario').value;
-  const senha = document.getElementById('senha').value;
-  if(usuario==='admin' && senha==='1234'){
-    loginAdmin.classList.add('hidden');
-    adminPanel.classList.remove('hidden');
-    mostrarAdmin();
-  }else{
-    alert('Usuário ou senha incorretos!');
+  function gerarHorarios() {
+    const selectCliente = document.getElementById('horaSelect');
+    const selectAdmin = document.getElementById('adminHora');
+    selectCliente.innerHTML = '';
+    selectAdmin.innerHTML = '';
+    let hora = 9; // abre às 09:00
+    const fim = 18; // fecha às 18:00
+    while (hora < fim) {
+      ['00','40'].forEach(min => {
+        const h = hora.toString().padStart(2,'0') + ':' + min;
+        const opt1 = document.createElement('option');
+        opt1.value = h; opt1.textContent = h;
+        selectCliente.appendChild(opt1);
+        const opt2 = document.createElement('option');
+        opt2.value = h; opt2.textContent = h;
+        selectAdmin.appendChild(opt2);
+      });
+      hora++;
+    }
   }
-});
 
-// Logout Admin
-logout.addEventListener('click',()=>{
-  adminPanel.classList.add('hidden');
-});
+  async function carregarBloqueios() {
+    const { data, error } = await supabase.from('blocked_slots').select('*').order('data');
+    if (error) return console.error(error);
+    const lista = document.getElementById('listaBloqueios');
+    lista.innerHTML = '';
+    data.forEach(b => {
+      const li = document.createElement('li');
+      li.textContent = `${b.data || ''} ${b.hora || ''} - ${b.motivo}`;
+      lista.appendChild(li);
+    });
+  }
 
-// Bloquear horário/dia
-btnBloquear.addEventListener('click',()=>{
-  const data = bloquearData.value;
-  const hora = bloquearHora.value;
-  if(!data){ alert('Selecione uma data'); return; }
-  bloqueios.push({data, hora: hora || null});
-  mostrarAdmin();
-  alert('Bloqueio adicionado!');
-  bloquearData.value=''; bloquearHora.value='';
-});
+  async function carregarAgendamentos() {
+    const { data, error } = await supabase.from('appointments').select('*, services(*)').order('data');
+    if (error) return console.error(error);
+    const lista = document.getElementById('listaAgendamentos');
+    lista.innerHTML = '';
+    data.forEach(a => {
+      const li = document.createElement('li');
+      li.textContent = `${a.data} ${a.hora} - ${a.services.nome} (Cliente: ${a.user_id})`;
+      lista.appendChild(li);
+    });
+  }
+
+  async function agendar() {
+    const serviceId = document.getElementById('servicoSelect').value;
+    const data = document.getElementById('dataInput').value;
+    const hora = document.getElementById('horaSelect').value;
+
+    // Verifica bloqueios
+    const { data: bloqueios } = await supabase.from('blocked_slots').select('*')
+      .eq('data', data)
+      .eq('hora', hora);
+    if (bloqueios.length > 0) {
+      document.getElementById('agendamentoMsg').textContent = 'Horário bloqueado!';
+      return;
+    }
+
+    const { error } = await supabase.from('appointments').insert([
+      { user_id: usuarioAtual.id, service_id: serviceId, data, hora }
+    ]);
+    if (error) {
+      document.getElementById('agendamentoMsg').textContent = 'Erro ao agendar: ' + error.message;
+    } else {
+      document.getElementById('agendamentoMsg').textContent = 'Agendamento criado!';
+      carregarAgendamentos();
+    }
+  }
+
+  async function bloquear() {
+    const data = document.getElementById('adminData').value;
+    const hora = document.getElementById('adminHora').value;
+    const motivo = document.getElementById('adminMotivo').value;
+
+    const { error } = await supabase.from('blocked_slots').insert([
+      { data, hora, motivo, admin_id: usuarioAtual.id }
+    ]);
+    if (error) {
+      document.getElementById('bloqueioMsg').textContent = 'Erro ao bloquear: ' + error.message;
+    } else {
+      document.getElementById('bloqueioMsg').textContent = 'Horário bloqueado!';
+      carregarBloqueios();
+    }
+  }
+
 </script>
-<footer id="assinatura">
-  <p><strong>Barbearia do Orlando</strong></p>
-  <p>Rua Exemplo, 123 - Bairro, Cidade</p>
-  <p>Telefone: (00) 12345-6789 | WhatsApp: (00) 98765-4321</p>
-  <p>Instagram: @barbeariadoorlando</p>
-</footer>
-
 </body>
 </html>
-
-
-
